@@ -1,0 +1,26 @@
+{
+  "name": "jev-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A generic stdio MCP adapter for Jev decisions",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "eslint": "^9.28.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.1"
+  }
+}

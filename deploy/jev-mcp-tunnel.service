@@ -1,0 +1,17 @@
+[Unit]
+Description=Jev MCP Secure Tunnel Client
+[Service]
+Type=simple
+WorkingDirectory=/home/ms/packages/jev-mcp
+EnvironmentFile=/home/ms/packages/jev-mcp/.env
+Environment=TUNNEL_CLIENT_PROFILE_DIR=/home/ms/packages/jev-mcp/tunnel-profile
+Environment=VOLTA_HOME=/home/ms/.volta
+Environment=PATH=/home/ms/.volta/bin:/usr/bin:/bin
+ExecStart=/home/ms/packages/jev-mcp/bin/tunnel-client run --profile jev-mcp
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target
