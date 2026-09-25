@@ -1,7 +1,7 @@
 import { ConfigurationError, JevApiError } from './errors.js';
 import { decisionResultSchema, type JevDecisionInput, type JevDecisionResult } from './schemas.js';
 
-export const DEFAULT_JEV_API_BASE_URL = 'https://thejevai.com';
+export const DEFAULT_JEV_API_BASE_URL = 'https://api.typesafe.ai';
 
 type ClientOptions = {
   apiKey?: string;

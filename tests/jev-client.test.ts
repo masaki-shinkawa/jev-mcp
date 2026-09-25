@@ -26,6 +26,39 @@ test('sends generic decision request to documented endpoint and validates result
   assert.equal(result.choice, 'left');
 });
 
+test('uses the TypeSafe AI System One endpoint by default', async () => {
+  let requestedUrl = '';
+  const client = new JevClient({
+    apiKey: 'test-key',
+    fetchImplementation: async (input) => {
+      requestedUrl = String(input);
+      return Response.json({ model: 'jev-latest', answers: { decision: { type: 'choice', choice: 'yes', confidence: 1, probabilities: { yes: 1 } } }, usage: {} });
+    },
+  });
+  await client.decide({ context: {}, question: 'Choose', choices: { yes: 'Yes' } });
+  assert.equal(requestedUrl, 'https://api.typesafe.ai/v1/systemone');
+});
+
+test('allows JEV_API_BASE_URL to override the default origin', async () => {
+  const originalBaseUrl = process.env.JEV_API_BASE_URL;
+  process.env.JEV_API_BASE_URL = 'https://custom.typesafe.test/';
+  try {
+    let requestedUrl = '';
+    const client = new JevClient({
+      apiKey: 'test-key',
+      fetchImplementation: async (input) => {
+        requestedUrl = String(input);
+        return Response.json({ model: 'jev-latest', answers: { decision: { type: 'choice', choice: 'yes', confidence: 1, probabilities: { yes: 1 } } }, usage: {} });
+      },
+    });
+    await client.decide({ context: {}, question: 'Choose', choices: { yes: 'Yes' } });
+    assert.equal(requestedUrl, 'https://custom.typesafe.test/v1/systemone');
+  } finally {
+    if (originalBaseUrl === undefined) delete process.env.JEV_API_BASE_URL;
+    else process.env.JEV_API_BASE_URL = originalBaseUrl;
+  }
+});
+
 test('requires an API key', async () => {
   await assert.rejects(new JevClient({ apiKey: '' }).decide({ context: null, question: 'Choose', choices: { a: 'A' } }), ConfigurationError);
 });

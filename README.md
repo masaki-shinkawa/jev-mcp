@@ -10,7 +10,7 @@ A standalone stdio MCP adapter for sending a context, question, and named choice
 
 ## Configure
 
-Copy `.env.example` to `.env` and set `JEV_API_KEY`. `JEV_API_BASE_URL` is the API origin, defaults to `https://thejevai.com`, and can be overridden for another supported environment. The adapter posts to `/v1/systemone`.
+Copy `.env.example` to `.env` and set `JEV_API_KEY`. `JEV_API_BASE_URL` is the API origin, defaults to `https://api.typesafe.ai`, and can be overridden for another supported environment. The adapter posts to `/v1/systemone`.
 
 The adapter sends `model: "jev-latest"`, the supplied context as `state`, and the question and choices in a `choice` question. It authenticates with a Bearer token. Jev's response answer is mapped from `answers.decision` to `{ choice, confidence, scores }`, with `probabilities` exposed as `scores`.
 
